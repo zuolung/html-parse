@@ -1,9 +1,12 @@
-const parser = require("htmlstr-parser")
+const parser = require("htmlstr-parser");
+const fs = require("fs");
 
-console.log(parser(`
+fs.writeFileSync('./demo.text', JSON.stringify(
+  parser(`
   <html>
     <body>
       <div id="root"></div>
     </body>
   </html>
-`))
+`)
+))
