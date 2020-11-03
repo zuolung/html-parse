@@ -1,7 +1,7 @@
 # html-parse
 transform htmlStr to object with Array
 
-# npm i htmlstr-parse
+# npm i htmlstr-parser-n
 ```
 const { htmlObjParser, htmlStrParser } = require("html-parser-n");
 const fs = require("fs");
