@@ -1,12 +1,16 @@
 {
   "name": "html-parser-n",
-  "version": "1.0.1",
-  "description": "transform htmlStr to object with Array",
+  "version": "1.0.3",
+  "description": "parser for html object or string",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
     "start": "node demo.js"
   },
+  "keywords":[
+    "html", "html-parser", "html-transform",
+    "htmlobj", "htmlstr"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zuolung/html-parse.git"
