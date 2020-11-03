@@ -14,6 +14,8 @@ module.exports = {
     library: "plugin", // 打包暴露出去库的名称
     libraryExport: "default", // 
     libraryTarget: "umd", // var | this | global | window | umd | commonJS
+    umdNamedDefine: true,
+    globalObject: 'this',
   },
 
   module: {

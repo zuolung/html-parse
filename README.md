@@ -1,9 +1,9 @@
 # html-parse
 transform htmlStr to object with Array
 
-# npm i htmlstr-parser
+# npm i htmlstr-parse
 ```
-const parser = require("htmlstr-parser");
+const parser = require("htmlstr-parse");
 const fs = require("fs");
 
 fs.writeFileSync('./demo.text', JSON.stringify(

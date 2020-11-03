@@ -1,6 +1,6 @@
 {
   "name": "htmlstr-parse",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "transform htmlStr to object with Array",
   "main": "index.js",
   "scripts": {
@@ -26,7 +26,5 @@
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
   },
-  "dependencies": {
-    "htmlstr-parser": "^2.0.1"
-  }
+  "dependencies": {}
 }
