@@ -5,8 +5,8 @@ const path = require("path");
 module.exports = {
   mode: "none",
   entry: {
-    "parser": "./src/parser.js",
-    "parser.min": "./src/parser.js",
+    "parser": "./src/main.js",
+    "parser.min": "./src/main.js",
   },
   output: {
     filename: "[name].js",

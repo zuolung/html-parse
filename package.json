@@ -1,6 +1,6 @@
 {
-  "name": "htmlstr-parse",
-  "version": "1.0.4",
+  "name": "html-parser-n",
+  "version": "1.0.1",
   "description": "transform htmlStr to object with Array",
   "main": "index.js",
   "scripts": {

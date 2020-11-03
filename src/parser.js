@@ -5,7 +5,7 @@ let sign_enum = {
   SIGN_START_OK: "SIGN_START_OK", // 开始标签读取完成 
 };
 
-export default function htmlTransform(htmlStr) {
+export default function htmlStrParser(htmlStr) {
   const str = htmlStr.replace(/\n/g, "");
   let result = { nodeName: "root", children: [] };
   // 默认 result.children[0]插入, use_line的[0]可以用数字1代替

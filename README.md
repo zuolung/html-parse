@@ -3,11 +3,11 @@ transform htmlStr to object with Array
 
 # npm i htmlstr-parse
 ```
-const parser = require("htmlstr-parse");
+const { htmlObjParser, htmlStrParser } = require("html-parser-n");
 const fs = require("fs");
 
-fs.writeFileSync('./demo.text', JSON.stringify(
-  parser(`
+fs.writeFileSync('./demo.json', JSON.stringify(
+  htmlStrParser(`
   <html>
     <body>
       <span id="root" style="color:red;">我是span标签</span>
@@ -15,6 +15,8 @@ fs.writeFileSync('./demo.text', JSON.stringify(
   </html>
 `)
 ))
+
+console.log(htmlObjParser(require("./demo.json")))
 ```
 
 # 结果
