@@ -1,21 +1,17 @@
 {
   "name": "html-parser-n",
-  "version": "1.0.4",
+  "version": "1.1.4",
   "description": "parser for html object or string",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
     "start": "node test.js"
   },
-  "keywords":[
-    "html", "html-parser", "html-transform",
-    "htmlobj", "htmlstr"
-  ],
+  "keywords": [],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zuolung/html-parse.git"
   },
-  "keywords": [],
   "author": "zuolung",
   "license": "ISC",
   "bugs": {
@@ -25,10 +21,9 @@
   "devDependencies": {
     "@babel/core": "^7.11.6",
     "@babel/parser": "^7.11.5",
-    "babel-loader": "^8.1.0",
     "@babel/preset-env": "^7.11.0",
+    "babel-loader": "^8.1.0",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
-  },
-  "dependencies": {}
+  }
 }

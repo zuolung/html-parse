@@ -1,20 +1,20 @@
 let sign_enum = {
-  SIGN_END: "SIGN_END",           // 结束标签读取 如 <xxxxx>
-  SIGN_END_OK: "SIGN_EN_OK",      // 结束标签读取完成
-  SIGN_START: "SIGN_START",       // 开始标签读取 如 </xxxxx>
-  SIGN_START_OK: "SIGN_START_OK", // 开始标签读取完成 
+  SIGN_END: "SIGN_END", // 结束标签读取 如 </xxxxx>
+  SIGN_END_OK: "SIGN_EN_OK", // 结束标签读取完成
+  SIGN_START: "SIGN_START", // 开始标签读取 如 <xxxxx>
+  SIGN_START_OK: "SIGN_START_OK", // 开始标签读取完成
 };
-
 export default function htmlStrParser(htmlStr) {
   const str = htmlStr.replace(/\n/g, "");
   let result = { nodeName: "root", children: [] };
-  // 默认 result.children[0]插入, use_line的[0]可以用数字1代替
-  // push改成use_line++，pop改成use_line--，这里为了调试用的栈记录
+  // 默认 result.children[0]插入, ，这里记录调试用的栈信息
   let use_line = [0];
-  let current_index = 0;            // 记录当前插入children的下标
-  let node = result;                // 当前操作的节点
-  let sign = "";                    // 标记标签字符串（可能包含属性字符）、文本信息
-  let status = "";                  // 当前状态，为空的时候我们认为是在读取当前节点（node）的文本信息
+  let current_index = 0; // 记录当前插入children的下标
+  let node = result; // 当前操作的节点
+  let sign = ""; // 标记标签字符串（可能包含属性字符）、文本信息
+  let status = ""; // 当前状态，为空的时候我们认为是在读取当前节点（node）的文本信息
+  let scripts = [];
+  let styles = [];
   for (var i = 0; i < str.length; i++) {
     var current = str.charAt(i);
     var next = str.charAt(i + 1);
@@ -31,6 +31,10 @@ export default function htmlStrParser(htmlStr) {
         status = sign_enum.SIGN_START;
       }
     } else if (current === ">") {
+      if (sign.includes("meta ")) {
+        status = sign_enum.SIGN_END;
+      }
+
       // (<xxx>) 读取中，遇到“>”， (<xxx>) 读取中完成
       if (status === sign_enum.SIGN_START) {
         // 记录当前node所在的位置，并更改node
@@ -41,25 +45,43 @@ export default function htmlStrParser(htmlStr) {
             sign = sign.replace(/^\s*/g, "").replace(/\"/g, "");
             let mark = sign.match(/^[a-zA-Z0-9]*\s*/)[0].replace(/\s/g, ""); // 记录标签
             // 标签上定义的属性获取
-            let attributeStr = sign.replace(mark, '').replace(/\s+/g, ",").split(",");
+            let attributeStr = sign
+              .replace(mark, "")
+              .replace(/\s+/g, ",")
+              .split(",");
             let attrbuteObj = {};
             let style = {};
-            attributeStr.map(attr => {
+            attributeStr.map((attr) => {
               if (attr) {
                 let value = attr.split("=")[1];
                 let key = attr.split("=")[0];
                 if (key === "style") {
-                  value.split(";").map(s => {
+                  value.split(";").map((s) => {
                     if (s) {
-                      style[s.split(":")[0]] = s.split(":")[1]
+                      style[s.split(":")[0]] = s.split(":")[1] || true;
                     }
-                  })
-                  return attrbuteObj[key] = style;
+                  });
+                  return (attrbuteObj[key] = style);
                 }
                 attrbuteObj[key] = value;
               }
-            })
-            node.children.push({ nodeName: mark, children: [], ...attrbuteObj, ...style })
+            });
+            node.children.push({
+              nodeName: mark,
+              children: [],
+              ...attrbuteObj,
+            });
+            if (mark.includes("script")) {
+              scripts.push({
+                ...attrbuteObj,
+              });
+            }
+
+            if (mark.includes("style")) {
+              scripts.push({
+                ...attrbuteObj,
+              });
+            }
           }
           current_index = node.children.length - 1;
           node = node.children[current_index];
@@ -70,7 +92,7 @@ export default function htmlStrParser(htmlStr) {
       }
       // (</xxx>) 读取中，遇到“>”， (</xxx>) 读取中完成
       if (status === sign_enum.SIGN_END) {
-        use_line.pop();
+        if (!sign.includes("meta ")) use_line.pop();
         node = result;
         // 重新寻找操作的node
         use_line.map((i) => {
